@@ -7,15 +7,22 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [0.17.0] - _Unreleased_
 
-### _Untitled_
+### 🕐 Process Duration
 
 ### Added
 
+- 🕐 Total Time Count [#5](https://github.com/alexlee-dev/deployer-tool/issues/5) - Display process duration
+
 ### Changed
+
+- ✏️ Non-Existing Branch - Try Again [#4](https://github.com/alexlee-dev/deployer-tool/issues/4) - Continue to prompt user until branch exists
+- ✏️ Actions Should be in Try/Catch Blocks [#16](https://github.com/alexlee-dev/deployer-tool/issues/16) - Place actions in try/catch blocks
 
 ### Removed
 
 ### Fixed
+
+- 🚧 UI Build Broken [#15](https://github.com/alexlee-dev/deployer-tool/issues/16) - Fix UI Build Broken issue
 
 ## [0.16.0] - 2020-09-22
 
