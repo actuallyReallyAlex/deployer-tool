@@ -17,6 +17,7 @@ export type MenuAction =
   | "mergeBranch"
   | "uiBuild"
   | "build"
+  | "deploy"
   | null;
 
 export interface Environment {
