@@ -13,7 +13,10 @@ const askDeployEnvironments = async (): Promise<Environment[]> => {
       choices: environments.map((environment: Environment) => environment.name),
     });
 
-    const filteredEnvironments = environments.filter((environment: Environment) => deployEnvironments.includes(environment.name));
+    const filteredEnvironments = environments.filter(
+      (environment: Environment) =>
+        deployEnvironments.includes(environment.name)
+    );
 
     return filteredEnvironments;
   } catch (error) {
