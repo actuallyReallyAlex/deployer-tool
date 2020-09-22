@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const path = require("path");
 
 const config = {
-  entry: "./src/dashboard/index.ts",
+  entry: "./src/client/index.tsx",
   mode: "development",
   module: {
     rules: [
@@ -36,9 +36,12 @@ const config = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: path.join(__dirname, "src/dashboard/index.html"),
+      template: path.join(__dirname, "src/client/index.html"),
     }),
   ],
+  // resolve: {
+  //   extensions: [".tsx"],
+  // },
 };
 
 module.exports = config;
