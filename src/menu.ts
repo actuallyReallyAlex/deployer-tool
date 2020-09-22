@@ -4,6 +4,7 @@ import inquirer from "inquirer";
 
 import all from "./actions/all";
 import mergeBranch from "./actions/mergeBranch";
+import uiBuild from "./actions/uiBuild";
 
 import { blankBoxenStyle } from "./constants";
 import { titleScreen } from "./util";
@@ -26,6 +27,7 @@ export const displayMainMenu = (state: AppState): Promise<MenuAction> =>
           choices: [
             { value: "all", name: "All Actions" },
             { value: "mergeBranch", name: "Merge Branch" },
+            { value: "uiBuild", name: "UI Build" },
             new inquirer.Separator(),
             { value: "about", name: "About" },
             { value: "exit", name: "Exit" },
@@ -98,6 +100,15 @@ export const interpretMenuAction = async (state: AppState): Promise<void> => {
         await titleScreen("deployer-5000");
 
         await mergeBranch();
+
+        console.log("Press any key to return to Main Menu ...");
+        await keypress();
+        state.menuActionEmitter.emit("actionCompleted", state);
+      },
+      uiBuild: async (state: AppState): Promise<void> => {
+        await titleScreen("deployer-5000");
+
+        await uiBuild();
 
         console.log("Press any key to return to Main Menu ...");
         await keypress();
