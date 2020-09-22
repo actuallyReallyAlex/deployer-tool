@@ -1,24 +1,22 @@
 import ora from "ora";
 import { Browser } from "puppeteer";
 
-const checkIfBranchExists = async (
+import askBranchName from "./askBranchName";
+
+const verifyBranch = async (
   browser: Browser,
   branchName: string
-): Promise<void> => {
-  let currentSpinner;
-  const {
-    GITLAB_BASE_DIRECTORY,
-    GITLAB_BASE_URL,
-    GITLAB_PROJECT_ID,
-  } = process.env;
-  if (!GITLAB_BASE_DIRECTORY || !GITLAB_BASE_URL || !GITLAB_PROJECT_ID) {
-    console.error("Environment variables not set up correctly!");
-    process.exit(1);
-  }
+): Promise<boolean> => {
   try {
-    const checkSpinner = ora("Checking if branch exists in project").start();
-    currentSpinner = checkSpinner;
-
+    const {
+      GITLAB_BASE_DIRECTORY,
+      GITLAB_BASE_URL,
+      GITLAB_PROJECT_ID,
+    } = process.env;
+    if (!GITLAB_BASE_DIRECTORY || !GITLAB_BASE_URL || !GITLAB_PROJECT_ID) {
+      console.error("Environment variables not set up correctly!");
+      process.exit(1);
+    }
     const page = (await browser.pages())[0];
     await page.goto(
       `${encodeURI(GITLAB_BASE_URL)}/${encodeURI(
@@ -33,17 +31,51 @@ const checkIfBranchExists = async (
     );
 
     if (pageText?.includes("Page Not Found")) {
-      checkSpinner.fail();
-      console.log("");
-      console.error(`Branch: ${branchName} - does not exist!`);
-      process.exit(1);
+      return false;
     }
 
-    checkSpinner.succeed("Branch exists!");
+    return true;
   } catch (error) {
-    if (currentSpinner) {
-      currentSpinner.fail();
+    console.error(error);
+    process.exit(1);
+  }
+};
+
+const checkIfBranchExists = async (
+  browser: Browser,
+  branchName: string
+): Promise<void> => {
+  const {
+    GITLAB_BASE_DIRECTORY,
+    GITLAB_BASE_URL,
+    GITLAB_PROJECT_ID,
+  } = process.env;
+  if (!GITLAB_BASE_DIRECTORY || !GITLAB_BASE_URL || !GITLAB_PROJECT_ID) {
+    console.error("Environment variables not set up correctly!");
+    process.exit(1);
+  }
+  try {
+    let branchNameExists = false;
+    let newBranchName = branchName;
+
+    while (!branchNameExists) {
+      const checkSpinner = ora(
+        `Checking if ${newBranchName} exists in project`
+      ).start();
+      const verification = await verifyBranch(browser, newBranchName);
+
+      if (verification) {
+        checkSpinner.succeed(`${newBranchName} exists!`);
+        branchNameExists = true;
+      } else {
+        checkSpinner.stopAndPersist({
+          text: `Branch: ${branchName} - does not exist!`,
+        });
+
+        newBranchName = await askBranchName();
+      }
     }
+  } catch (error) {
     console.error(error);
     process.exit(1);
   }
