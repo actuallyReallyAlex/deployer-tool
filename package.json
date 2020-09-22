@@ -7,7 +7,7 @@
     "deployer-5000": "./index.js"
   },
   "scripts": {
-    "build": "rimraf build && tsc",
+    "build": "rimraf build && npm run format && npm run lint && tsc",
     "format": "prettier --write src/**/*",
     "lint": "eslint src",
     "start": "env-cmd node build/index.js -- start",
