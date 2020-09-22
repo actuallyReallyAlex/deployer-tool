@@ -5,13 +5,13 @@ import { Browser } from "puppeteer";
 const createBuild = async (browser: Browser): Promise<void> => {
   let currentSpinner;
   const {
-    JENKINS_BUILD_URL,
+    JENKINS_BASE_URL,
     JENKINS_MAIN_BRANCH_ID,
     JENKINS_ORG_ID,
     JENKINS_PROJECT_ID,
   } = process.env;
   if (
-    !JENKINS_BUILD_URL ||
+    !JENKINS_BASE_URL ||
     !JENKINS_MAIN_BRANCH_ID ||
     !JENKINS_ORG_ID ||
     !JENKINS_PROJECT_ID
@@ -28,7 +28,7 @@ const createBuild = async (browser: Browser): Promise<void> => {
     const page = (await browser.pages())[0];
 
     await page.goto(
-      `${encodeURI(JENKINS_BUILD_URL)}/job/${encodeURI(
+      `${encodeURI(JENKINS_BASE_URL)}/job/${encodeURI(
         JENKINS_ORG_ID
       )}/job/${encodeURI(JENKINS_PROJECT_ID)}/job/${encodeURI(
         JENKINS_MAIN_BRANCH_ID

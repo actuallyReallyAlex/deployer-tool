@@ -10,13 +10,13 @@ const createUIBuild = async (
 ): Promise<void> => {
   let currentSpinner;
   const {
-    JENKINS_BUILD_URL,
+    JENKINS_BASE_URL,
     JENKINS_MAIN_BRANCH_ID,
     JENKINS_ORG_ID,
     JENKINS_PROJECT_ID,
   } = process.env;
   if (
-    !JENKINS_BUILD_URL ||
+    !JENKINS_BASE_URL ||
     !JENKINS_MAIN_BRANCH_ID ||
     !JENKINS_ORG_ID ||
     !JENKINS_PROJECT_ID
@@ -32,12 +32,12 @@ const createUIBuild = async (
     currentSpinner = createBuildSpinner;
 
     const urls = {
-      consumed: `${encodeURI(JENKINS_BUILD_URL)}/job/${encodeURI(
+      consumed: `${encodeURI(JENKINS_BASE_URL)}/job/${encodeURI(
         JENKINS_ORG_ID
       )}/job/${encodeURI(JENKINS_PROJECT_ID)}/job/${encodeURI(
         JENKINS_MAIN_BRANCH_ID
       )}/job/Build UI - Consumed/`,
-      standalone: `${encodeURI(JENKINS_BUILD_URL)}/job/${encodeURI(
+      standalone: `${encodeURI(JENKINS_BASE_URL)}/job/${encodeURI(
         JENKINS_ORG_ID
       )}/job/${encodeURI(JENKINS_PROJECT_ID)}/job/${encodeURI(
         JENKINS_MAIN_BRANCH_ID
