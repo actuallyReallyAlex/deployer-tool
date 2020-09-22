@@ -3,6 +3,7 @@ import chalk from "chalk";
 import inquirer from "inquirer";
 
 import all from "./actions/all";
+import build from "./actions/build";
 import mergeBranch from "./actions/mergeBranch";
 import uiBuild from "./actions/uiBuild";
 
@@ -26,6 +27,8 @@ export const displayMainMenu = (state: AppState): Promise<MenuAction> =>
           name: "menuAction",
           choices: [
             { value: "all", name: "All Actions" },
+            new inquirer.Separator(),
+            { value: "build", name: "Build" },
             { value: "mergeBranch", name: "Merge Branch" },
             { value: "uiBuild", name: "UI Build" },
             new inquirer.Separator(),
@@ -109,6 +112,15 @@ export const interpretMenuAction = async (state: AppState): Promise<void> => {
         await titleScreen("deployer-5000");
 
         await uiBuild();
+
+        console.log("Press any key to return to Main Menu ...");
+        await keypress();
+        state.menuActionEmitter.emit("actionCompleted", state);
+      },
+      build: async (state: AppState): Promise<void> => {
+        await titleScreen("deployer-5000");
+
+        await build();
 
         console.log("Press any key to return to Main Menu ...");
         await keypress();
