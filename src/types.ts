@@ -10,7 +10,7 @@ export interface AppState {
   menuActionEmitter: EventEmitter.EventEmitter;
 }
 
-export type MenuAction = "about" | "exit" | "bigJob" | null;
+export type MenuAction = "about" | "exit" | "all" | "mergeBranch" | null;
 
 export interface Environment {
   buildSelector: string;
