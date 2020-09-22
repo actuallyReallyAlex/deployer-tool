@@ -1,6 +1,6 @@
 {
   "name": "deployer-5000",
-  "version": "0.15.0",
+  "version": "0.16.0",
   "description": "A tool to go from merge request to full deploy into IT.",
   "main": "index.js",
   "bin": {
