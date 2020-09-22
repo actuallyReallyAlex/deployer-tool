@@ -1,3 +1,4 @@
+import formatDistance from "date-fns/formatDistance";
 import puppeteer from "puppeteer";
 
 import createBuild from "../commands/createBuild";
@@ -5,6 +6,8 @@ import gitLabSignIn from "../commands/gitLabSignIn";
 import jenkinsLogin from "../commands/jenkinsLogin";
 
 const build = async (): Promise<void> => {
+  const processStartTime = new Date();
+
   // * Establish GL Credentials
   if (!process.env.GITLAB_USERNAME || !process.env.GITLAB_PASSWORD) {
     console.error("No GitLab Credentials set up!");
@@ -42,6 +45,12 @@ const build = async (): Promise<void> => {
   console.log("");
   console.log("Deployer 5000 - Completed!");
   console.log("");
+
+  const processEndTime = new Date();
+
+  const processDuration = formatDistance(processStartTime, processEndTime);
+
+  console.log(`Process Duration - ${processDuration}`);
 };
 
 export default build;
