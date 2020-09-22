@@ -2,6 +2,8 @@ import clear from "clear";
 import Configstore from "configstore";
 import EventEmitter from "events";
 
+import dashboard from "./dashboard";
+
 import { displayMainMenu, interpretMenuAction } from "./menu";
 import setup from "./setup";
 import { titleScreen } from "./util";
@@ -54,5 +56,7 @@ const main = async (): Promise<void> => {
 
 // * Handle local development with `npm start`
 if (process.argv[3] === "start") main();
+// * Dashboard
+if (process.argv[3] === "dashboard") dashboard();
 
 export default main;
