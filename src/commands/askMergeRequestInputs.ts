@@ -2,7 +2,9 @@ import inquirer from "inquirer";
 
 import { MergeRequestInputs } from "../types";
 
-const askMergeRequestInputs = async (branchName: string): Promise<MergeRequestInputs> => {
+const askMergeRequestInputs = async (
+  branchName: string
+): Promise<MergeRequestInputs> => {
   try {
     const { title } = await inquirer.prompt({
       type: "input",
@@ -15,7 +17,8 @@ const askMergeRequestInputs = async (branchName: string): Promise<MergeRequestIn
     const { description } = await inquirer.prompt({
       type: "input",
       name: "description",
-      message: "What would you like to write for the description of the merge request?",
+      message:
+        "What would you like to write for the description of the merge request?",
       suffix: " *Not required",
     });
     const { deleteAfterMerge } = await inquirer.prompt({

@@ -7,8 +7,8 @@ const jenkinsLogin = async (
   password: string
 ): Promise<void> => {
   let currentSpinner;
-  const { JENKINS_BUILD_URL } = process.env;
-  if (!JENKINS_BUILD_URL) {
+  const { JENKINS_BASE_URL } = process.env;
+  if (!JENKINS_BASE_URL) {
     console.error("Environment variables not set up properly!");
     process.exit(1);
   }
@@ -18,7 +18,7 @@ const jenkinsLogin = async (
 
     const page = (await browser.pages())[0];
 
-    await page.goto(`${encodeURI(JENKINS_BUILD_URL)}/login`, {
+    await page.goto(`${encodeURI(JENKINS_BASE_URL)}/login`, {
       waitUntil: "networkidle0",
     });
 
